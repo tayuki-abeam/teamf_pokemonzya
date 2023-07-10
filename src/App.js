@@ -1,4 +1,13 @@
-import logo from './logo.svg';
+/* App.js */
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+//import Login from "./components/Login";
+import Menu from "./components/Menu";
+import GamePlay from "./components/GamePlay";
+import Libraly from "./components/Libraly";
+import Rule from "./components/Rule";
+
+//Login
 import './App.css';
 import axios from "axios";
 import "@aws-amplify/ui-react/styles.css";
@@ -10,8 +19,9 @@ import {
   View,
   Card,
 } from "@aws-amplify/ui-react";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {Amplify, API, Auth, Hub } from 'aws-amplify';
+
 Amplify.configure({
   Auth: {
     region: 'us-east-1',
@@ -28,30 +38,17 @@ Amplify.configure({
   }
 })
 
-function App({ signOut, user }) {    
-  axios
-  .get(' https://u3y3rezg17.execute-api.ap-northeast-1.amazonaws.com/Test')
-  .then((response) => {
-      console.log(response);
-  })
-  .catch((error) => {
-      console.log(error);
-  });
-
+const App = (signOut) => {
   return (
-    <View className="App">
-      <Card>
-        <Image src={logo} className="App-logo" alt="logo" />
-        <Heading level={1}>We now have Auth!</Heading>
-      </Card>
-      <Button onClick={signOut}>Sign Out</Button>
-    </View>
+    <BrowserRouter>
+      <Routes>
+        <Route path={`/`} element={<Menu />} />
+        <Route path={`/GamePlay`} element={<GamePlay />} />
+        <Route path={`/Libraly`} element={<Libraly />} />
+        <Route path={`/Rule`} element={<Rule />} />
+      </Routes>
+    </BrowserRouter>
   );
+};
 
-
-  
-}
-
-export default withAuthenticator(App, {
-  signUpAttributes: ['email'],
-})
+export default withAuthenticator(App);
