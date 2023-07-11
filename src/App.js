@@ -1,10 +1,9 @@
 /* App.js */
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-//import Login from "./components/Login";
 import Menu from "./components/Menu";
 import GamePlay from "./components/GamePlay";
-import Libraly from "./components/Libraly";
+import Library from "./components/Library";
 import Rule from "./components/Rule";
 
 //Login
@@ -44,7 +43,7 @@ const App = (signOut) => {
       <Routes>
         <Route path={`/`} element={<Menu />} />
         <Route path={`/GamePlay`} element={<GamePlay />} />
-        <Route path={`/Libraly`} element={<Libraly />} />
+        <Route path={`/Library`} element={<Library />} />
         <Route path={`/Rule`} element={<Rule />} />
       </Routes>
     </BrowserRouter>

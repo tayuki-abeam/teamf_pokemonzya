@@ -1,0 +1,21 @@
+.Back{
+    background-image: url("./images/background5.png");
+    background-size: 120%;
+    background-attachment: fixed;
+    width: 100vw;
+    height: 53vw;
+  }
+  
+  .Images{
+    padding-top:130px;
+  }
+  
+  .Button{
+    background: transparent;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .Button:hover{
+    opacity: 0.5;
+  }

@@ -1,0 +1,17 @@
+.Library {
+    text-align: center;
+    width:100%;
+    height:100vh;
+  }
+  
+  
+  .pokemonCardContainer{
+    display: grid;
+    /* この行の「ifr」で何匹横展開するかを指定できる */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    place-items: center;
+    gap: 20px;
+    margin-top:20px;
+  }
+  
+  
