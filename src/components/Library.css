@@ -14,4 +14,12 @@
     margin-top:20px;
   }
   
+  /*背景処理を追加*/
+  .Back{
+    background-image: url("./images/background5.png");
+    background-size: 120%;
+    background-attachment: fixed;
+    width: 100vw;
+    height: 53vw;
+  }
   

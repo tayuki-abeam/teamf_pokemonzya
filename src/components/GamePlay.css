@@ -1,0 +1,99 @@
+.Back{
+    background-image: url("./images/background.png");
+    background-size: 120%;
+    background-attachment: fixed;
+    width: 100vw;
+    height: 53vw;
+  }
+
+.Count{
+  padding-top: 10px;
+}
+
+.Countposition{
+  position:relative;
+  bottom:65px;
+  left:145px;
+  font-weight:bold;
+  color: #FFF;
+  font-size: 24px;
+}
+
+.Messageposition{
+  position:relative;
+  bottom:125px;
+  font-weight:bold;
+  font-size: 24px;
+}
+
+.Flame{
+  position:relative;
+  bottom:90px;
+}
+
+.Text{
+  position:relative;
+  bottom:30px;
+}
+
+.Pokemon{
+  position:relative;
+  bottom:350px;
+  width:200px;
+}
+
+#Next{
+  position:relative;
+  bottom:290px;
+}
+
+#Answer{
+  position:relative;
+  bottom:290px;
+}
+
+.Button{
+    background: transparent;
+    cursor: pointer;
+    border: none;
+  }
+  
+.Button:hover{
+    opacity: 0.5;
+  }
+
+#Player1{
+  position:absolute;
+  top:260px;
+  left:110px;
+}
+
+#Player4{
+  position:absolute;
+  top: 260px;
+  left:1020px;
+}
+
+#Player2{
+  position:absolute;
+  top:430px;
+  left:300px;
+}
+
+#Player3{
+  position:absolute;
+  top:430px;
+  left:850px;
+}
+
+#Position1{
+  position:absolute;
+  bottom: 10px;
+  left:10px;
+}
+
+#Position2{
+  position:absolute;
+  bottom: 20px;
+  left:120px;
+}

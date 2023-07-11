@@ -21,6 +21,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import {Amplify, API, Auth, Hub } from 'aws-amplify';
 
+//ユーザ情報をエクスポート
+import { createContext } from 'react';
+export const UserName = createContext();
+let userName_Context = ""
+
 Amplify.configure({
   Auth: {
     region: 'us-east-1',
@@ -38,7 +43,21 @@ Amplify.configure({
 })
 
 const App = (signOut) => {
+
+  //ユーザ情報の受け渡し処理
+  useEffect(() => {
+      const init = async() => {
+          const currentUser = await Auth.currentAuthenticatedUser();
+          userName_Context = currentUser["username"]
+          console.log("-----UserInfo is this-----")
+          console.log(userName_Context)
+      }
+      init()
+    }, []);
+  
+
   return (
+    <UserName.Provider value={userName_Context}>
     <BrowserRouter>
       <Routes>
         <Route path={`/`} element={<Menu />} />
@@ -47,7 +66,9 @@ const App = (signOut) => {
         <Route path={`/Rule`} element={<Rule />} />
       </Routes>
     </BrowserRouter>
+    </UserName.Provider>
   );
 };
 
 export default withAuthenticator(App);
+

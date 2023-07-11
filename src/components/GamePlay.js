@@ -3,6 +3,50 @@
   import pokeDemoImage from './images/pokeDemo.jpg'
   import React, { useEffect, useState } from 'react';
 
+  //データ受け渡し
+  import { useContext } from 'react';
+  import { UserName } from '../App';
+
+  //デザイン
+  import '../App.css';
+  import './GamePlay.css';
+  import Backgroundaudio from './images/audio.wav';
+  import Buttonimage5 from './images/ホームボタン.png';
+  import Gamecount from './images/ゲームカウント.png';
+
+  import Player01_0 from './images/P1 0PT.png';
+  import Player01_1 from './images/P1 1PT.png';
+  import Player01_2 from './images/P1 2PT.png';
+  import Player01_3 from './images/P1 3PT.png';
+  import Player01_4 from './images/P1 4PT.png';
+  import Player01_5 from './images/P1 5PT.png';
+
+  import Player02_0 from './images/P2 0PT.png';
+  import Player02_1 from './images/P2 1PT.png';
+  import Player02_2 from './images/P2 2PT.png';
+  import Player02_3 from './images/P2 3PT.png';
+  import Player02_4 from './images/P2 4PT.png';
+  import Player02_5 from './images/P2 5PT.png';
+
+  import Player03_0 from './images/P3 0PT.png';
+  import Player03_1 from './images/P3 1PT.png';
+  import Player03_2 from './images/P3 2PT.png';
+  import Player03_3 from './images/P3 3PT.png';
+  import Player03_4 from './images/P3 4PT.png';
+  import Player03_5 from './images/P3 5PT.png';
+
+  import Player04_0 from './images/P4 0PT.png';
+  import Player04_1 from './images/P4 1PT.png';
+  import Player04_2 from './images/P4 2PT.png';
+  import Player04_3 from './images/P4 3PT.png';
+  import Player04_4 from './images/P4 4PT.png';
+  import Player04_5 from './images/P4 5PT.png';
+
+  import Next from './images/次へボタン.png';
+  import Answer from './images/答えボタン.png';
+  import Text from './images/Text.png';
+  import Flame from './images/Flame.png';
+
   //-----内部管理変数-----
   //ゲーム進行に必要なデータ
   let poke_differentname_array = {} //シャッフルした名前のペア情報
@@ -10,10 +54,10 @@
   let maxGameCount = 0  //ゲームカウント
   //point関連
   const maxPlayerPoint = 5;  //プレイヤーの得点条件
-  const player01PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
-  const player02PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
-  const player03PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
-  const player04PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
+  const player01_imageDic = {0:Player01_0, 1:Player01_1, 2:Player01_2, 3:Player01_3, 4:Player01_4, 5:Player01_5}
+  const player02_imageDic = {0:Player02_0, 1:Player02_1, 2:Player02_2, 3:Player02_3, 4:Player02_4, 5:Player02_5}
+  const player03_imageDic = {0:Player03_0, 1:Player03_1, 2:Player03_2, 3:Player03_3, 4:Player03_4, 5:Player03_5}
+  const player04_imageDic = {0:Player04_0, 1:Player04_1, 2:Player04_2, 3:Player04_3, 4:Player04_4, 5:Player04_5}
 
   //現状の一時保存用データ
   let poke_previous_array = {}  //既出ポケモン一覧辞書
@@ -31,23 +75,28 @@
   let player03_IN = 0;
   let player04_IN = 0;
   
-  //ゲーム画面
+  //ゲーム画面メイン処理
   const GamePlay = () => {
+    console.log("-----GamePlay_Main-----")
     
+    //ユーザ情報の取得
+    const userName_IN = useContext(UserName);
+    console.log("username is " + userName_IN)
+
     //-----変数（画面表示する情報）-----
     //文字型_Message_メイン
     const [msgName, setMsg] = useState("NEXTでスタート") 
     //文字型_Message_解答
-    const [msgAns, setMsg_Ans] = useState("")
+    const [msgAns, setMsg_Ans] = useState("頑張ってね！")
     //数字型_ゲームのターン数
     const [gameCount, setGameCount] = useState(0) 
     //数字型_ポケモンの画像
     const [pokeImage,setPokeImage] = useState(pokeDemoImage) 
     //Playerのポイント(画像にするかも)
-    const [player01,setPlayer01] = useState(0)
-    const [player02,setPlayer02] = useState(0)
-    const [player03,setPlayer03] = useState(0)
-    const [player04,setPlayer04] = useState(0)
+    const [player01,setPlayer01] = useState(Player01_0)
+    const [player02,setPlayer02] = useState(Player02_0)
+    const [player03,setPlayer03] = useState(Player03_0)
+    const [player04,setPlayer04] = useState(Player04_0)
 
     //-----変数（Demo用）-----
     //デバックで内部の動作を確認するための値
@@ -71,16 +120,39 @@
     } 
     
     //Playerの点数管理
-    const pointManager1 = () => {
-      /*
-      image = 
-      setPlayer01()
-      */
+    
+    const pointManager01 = () => {
+      if(player01_IN < 5){
+        player01_IN++
+        setPlayer01(player01_imageDic[player01_IN])
+      }  
+    }
+        
+    const pointManager02 = () => {
+      if(player02_IN < 5){
+        player02_IN++
+        setPlayer02(player02_imageDic[player02_IN])  
+      }
+    }
+        
+    const pointManager03 = () => {
+      if(player03_IN < 5){
+        player03_IN++
+        setPlayer03(player03_imageDic[player03_IN])
+      }
+    }
+        
+    const pointManager04 = () => {
+      if(player04_IN < 5){
+        player04_IN++
+        setPlayer04(player04_imageDic[player04_IN])
+      }
     }
 
     //ゲーム開始時に各変数を初期化
     const gameStart = () => {
       console.log("--gameStart--")
+      console.log("playUser is " + userName_IN)
       //-----内部変数の準備-----
       const pokeGameDic = getGameInfoDic()
       poke_differentname_array = pokeGameDic["poke_differentname_array"];
@@ -96,7 +168,7 @@
       setPokeImage(pokeDemoImage)
       //ポケモン画像を初期化
       DB_count = 0
-      poke_previous_array_DB = {"user":"100"}
+      poke_previous_array_DB = {"user":userName_IN}
       poke_previous_array = {}
       //カウントを初期化
       gameCount_IN = 0
@@ -149,15 +221,6 @@
       setMsg_Ans("また会おうね！")
       //ポケモンの画像を初期化
       setPokeImage(pokeDemoImage)
-
-      //出会ったポケモンをDBに登録
-      console.log("--registDB--")
-      console.log(poke_previous_array_DB)
-      /////Lambda接続/////
-      /////Lambda接続/////
-      //配列の初期化
-      poke_previous_array_DB = {"user":"100"}
-
     }
     //解答
     const setAnser = () => {
@@ -167,10 +230,30 @@
     //Homeへ戻る
     const toMenu = () => {
       gameCount_IN = 0
+
+      //PlayerPointを初期化
+      player01_IN = 0;
+      player02_IN = 0;
+      player03_IN = 0;
+      player04_IN = 0;
+      setPlayer01(player01_imageDic[player01_IN])
+      setPlayer02(player02_imageDic[player02_IN])
+      setPlayer03(player03_imageDic[player03_IN])
+      setPlayer04(player04_imageDic[player04_IN])
+
+      //出会ったポケモンをDBに登録
+      console.log("--registDB--")
+      console.log(poke_previous_array_DB)
+      /////Lambda接続/////
+      /////Lambda接続/////
+      //配列の初期化
+      poke_previous_array_DB = {"user":userName_IN}
+
       gameEnd()
     }
 
     //ここからHTML
+    /*
     return (
       <div>
         <center><div>
@@ -196,6 +279,42 @@
       </div>
       
     );
+    */
+    return(
+    <div class="Back">
+    <body>
+    <center>
+        <div>
+        <img class="Count" src={Gamecount} alt="ゲームカウント" vspace="10"/><br/>
+
+        {/* ゲームカウント */}
+          <div class="Countposition">{gameCount}</div>
+
+        <img class="Text" src={Text} alt="テキスト背景"/><br/>
+        <div class="Messageposition">
+          <div>{msgName}</div>
+          <div>{msgAns}</div>
+        </div>
+        <img class="Flame" src={Flame} alt="フレーム画像" vspace="10"/><br/>
+
+        {/*'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png'*/}
+        {/* <div>「画像情報」＝{pokeImageID}</div> */}
+        <img class="Pokemon" src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png'}/><br/>
+        <button class="Button" id="Next" onClick={nextFunc}><img src={Next}/></button><br/>
+        <button class="Button" id="Answer" onClick={setAnser}><img src={Answer}/></button>
+        </div>
+    </center>
+                <button class="Button" id="Player1"onClick={pointManager01}><img src={player01} alt="プレイヤー1"/></button>
+                <button class="Button" id="Player4"onClick={pointManager04}><img src={player04} alt="プレイヤー4"/></button><br/>
+                <button class="Button" id="Player2"onClick={pointManager02}><img src={player02} alt="プレイヤー2"/></button>
+                <button class="Button" id="Player3"onClick={pointManager03}><img src={player03} alt="プレイヤー3"/></button><br/>
+                <Link to={`/`}>
+                  <button class="Button"id="Position1"><img src={Buttonimage5} alt="ボタンイメージ5"onClick={toMenu}/></button>
+                </Link>
+    <audio id="Position2" src={Backgroundaudio} controls></audio>
+    </body>
+  </div>
+    )
   };
   
   export default GamePlay;

@@ -81,6 +81,8 @@ import { Link } from "react-router-dom";
     //pokemonData[]を
     return (
     <>
+    {/* ここで背景画像を追加 */}
+    <div class="Back">
     <Navbar />
     <div className="App">
       {loading ? (
@@ -100,7 +102,8 @@ import { Link } from "react-router-dom";
           <Link to={`/`}><button>Menuへ</button></Link>
         </div>
         </>}
-    </div>;
+    </div>
+    </div>
     </>
     );
 
