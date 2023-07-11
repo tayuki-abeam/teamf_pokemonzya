@@ -5,14 +5,20 @@
 
   //-----内部管理変数-----
   //ゲーム進行に必要なデータ
-  let pokeGameDic = {}
-  let poke_differentname_array = {}
-  let poke_number_array = {}
-  let maxGameCount = 0
+  let poke_differentname_array = {} //シャッフルした名前のペア情報
+  let poke_number_array = {}  //ポケモンの出現順番
+  let maxGameCount = 0  //ゲームカウント
+  //point関連
   const maxPlayerPoint = 5;  //プレイヤーの得点条件
+  const player01PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
+  const player02PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
+  const player03PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
+  const player04PointImageDic = {0:"画像0", 1:"画像1", 2:"画像2", 3:"画像3", 4:"画像4", 5:"画像Win"}
 
   //現状の一時保存用データ
   let poke_previous_array = {}  //既出ポケモン一覧辞書
+  let DB_count = 0
+  let poke_previous_array_DB = {} //DBに登録するためのポケモン辞書
   let nextGameInfo = {}
   let gameCount_IN = 0
   //let currentPokeImage = "ここに画像のURL"
@@ -63,12 +69,20 @@
       }
       console.log("gameCount is " + gameCount_IN)
     } 
+    
+    //Playerの点数管理
+    const pointManager1 = () => {
+      /*
+      image = 
+      setPlayer01()
+      */
+    }
 
     //ゲーム開始時に各変数を初期化
     const gameStart = () => {
       console.log("--gameStart--")
       //-----内部変数の準備-----
-      pokeGameDic = getGameInfoDic()
+      const pokeGameDic = getGameInfoDic()
       poke_differentname_array = pokeGameDic["poke_differentname_array"];
       poke_number_array = pokeGameDic["poke_number_array"];
       maxGameCount = Object.keys(pokeGameDic.poke_number_array).length; //ゲームの最大ターン数
@@ -81,6 +95,8 @@
       //ポケモンの画像を初期化
       setPokeImage(pokeDemoImage)
       //ポケモン画像を初期化
+      DB_count = 0
+      poke_previous_array_DB = {"user":"100"}
       poke_previous_array = {}
       //カウントを初期化
       gameCount_IN = 0
@@ -135,9 +151,13 @@
       setPokeImage(pokeDemoImage)
 
       //出会ったポケモンをDBに登録
+      console.log("--registDB--")
+      console.log(poke_previous_array_DB)
       /////Lambda接続/////
-      //-----出会ったポケモンの図鑑番号は「poke_previous_array」-----
       /////Lambda接続/////
+      //配列の初期化
+      poke_previous_array_DB = {"user":"100"}
+
     }
     //解答
     const setAnser = () => {
@@ -149,8 +169,6 @@
       gameCount_IN = 0
       gameEnd()
     }
-    //Playerの点数管理
-
 
     //ここからHTML
     return (
@@ -200,6 +218,7 @@
     return pokeInfoDic
   }
 
+
   //gamecount情報から、次のターンの｛ポケモンの画像のID：ポケモンの名前のID｝を返す
   function getNextPokeIDInfo(gameCount){
     let pokeImageNum = poke_number_array[gameCount];
@@ -220,6 +239,8 @@
     }else{
       //初回の場合
       poke_previous_array[currentPokeID] = "ok"
+      poke_previous_array_DB[DB_count] = currentPokeID
+      DB_count++
       return true
     }
   }
